@@ -8,6 +8,7 @@ let flippedVideo;
 // To store the classification
 let label = "";
 let confiaza = 0;
+let emojis = ["✨", "💖", "🌟", "💫"];
 
 // Load the model first
 function preload() {

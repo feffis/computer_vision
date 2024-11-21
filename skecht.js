@@ -7,6 +7,7 @@ let video;
 let flippedVideo;
 // To store the classification
 let label = "";
+let confiaza = 0;
 
 // Load the model first
 function preload() {
@@ -35,9 +36,22 @@ function draw() {
   textSize(16);
   textAlign(CENTER);
   text(label, width / 2, height - 4);
+
+  // textSize(8);
+  // textAlign(LEFT);
+  // text(confiaza, 10, height - 4);
+  // Get a prediction for the current video frame
+
+  if (etiqueta == "batman" && confiaza > 0.9) {
+    filter(INVERT);
+    filter(GRAY);
+    fill(255);
+    textSize(80);
+    textAlign(CENTER);
+    text("el señor de la noche!", width / 2, height / 2);
+  }
 }
 
-// Get a prediction for the current video frame
 function classifyVideo() {
   classifier.classify(flippedVideo, gotResult);
 }
@@ -52,6 +66,7 @@ function gotResult(error, results) {
   // The results are in an array ordered by confidence.
   // console.log(results[0]);
   label = results[0].label;
+  confiaza = results[0].confidence;
   // Classifiy again!
   classifyVideo();
 }
